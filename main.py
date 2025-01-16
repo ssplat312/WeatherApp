@@ -22,12 +22,13 @@ def PrintForcast(allWeather):
     for weatherData in allWeather["data"]:
         dayPos = weatherData["datetime"].find(":")
         curDay = int(weatherData["datetime"][dayPos - 2:dayPos])
+        curTemp =   round(weatherData["temp"], 2)
         if curDay != previousDay:
             print(f"The hgih/low tempeture for day {previousDay} was {dayHigh}C/{dayLow}C or {CelciusToFarinhiet(dayHigh)}F/{CelciusToFarinhiet(dayLow)}F") if previousDay != 0 else print(f"Weather for {curDay} to {curDay + 5}")
             print(f"\nWeather for day {curDay}.")
-            dayHigh = weatherData["temp"]
-            dayLow = weatherData["temp"]
-        print(f"At hour {weatherData["datetime"][dayPos + 1:]} it is {weatherData["temp"]}C/{CelciusToFarinhiet(weatherData["temp"])}F with {weatherData["weather"]["description"]}")
+            dayHigh = curTemp
+            dayLow = curTemp
+        print(f"At hour {weatherData["datetime"][dayPos + 1:]} it is {curTemp}C/{CelciusToFarinhiet(curTemp)}F with {weatherData["weather"]["description"]}")
         previousDay = curDay
 
         if dayHigh < weatherData["temp"]:
@@ -40,7 +41,7 @@ def PrintForcast(allWeather):
         
 
 def CelciusToFarinhiet(temputure):
-    return (temputure * 9/5) + 32 
+    return round((temputure * 9/5) + 32, 2)
 
 desiredLocation = input("Where do you want to check the weather for the next 5 days?(enter the city name and state): ")
 
