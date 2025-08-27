@@ -1,12 +1,18 @@
 import requests
+from dotenv import load_dotenv
+import os
+
 def GetGeoLocation(location):
-    url = "https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi"
+    load_dotenv()
+
+    url = os.environ.get("GeoloationUrl")
 
     querystring = {"address": location}
 
+
     headers = {
-        "x-rapidapi-key": "a85dcfd916msh4297cecd3f4bb06p16e23cjsn05408e18591a",
-        "x-rapidapi-host": "address-from-to-latitude-longitude.p.rapidapi.com"
+        "x-rapidapi-key": os.environ.get("GeolocationKey"),
+        "x-rapidapi-host": os.environ.get("GeolocationHost")
     }
 
     response = requests.get(url, headers=headers, params=querystring)

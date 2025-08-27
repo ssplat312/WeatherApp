@@ -43,15 +43,17 @@ def PrintForcast(allWeather):
 def CelciusToFarinhiet(temputure):
     return round((temputure * 9/5) + 32, 2)
 
-desiredLocation = input("Where do you want to check the weather for the next 5 days?(enter the city name and state): ")
+if __name__ == "__main__":
 
-GeoLocation = GetGeoLocation(desiredLocation)
+    desiredLocation = input("Where do you want to check the weather for the next 5 days?(enter the city name and state): ")
 
-selectedLocation = ChooseGeoLocation(GeoLocation)
+    GeoLocation = GetGeoLocation(desiredLocation)
 
-WeatherInfo = Get5DayForcast(selectedLocation["latitude"], selectedLocation["longitude"])
+    selectedLocation = ChooseGeoLocation(GeoLocation)
 
-PrintForcast(WeatherInfo)
+    WeatherInfo = Get5DayForcast(selectedLocation["latitude"], selectedLocation["longitude"])
+
+    PrintForcast(WeatherInfo)
 
 
 
