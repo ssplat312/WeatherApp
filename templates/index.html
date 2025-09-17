@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>5 Day Forecast</title>
+    </head>
+
+    <body>
+        <input type="text" id="CityInput" placeholder="Enter City Name">
+        <input onkeydown="" type="text" id="StateInput" placeholder="Enter State Name">
+        <button onclick="GetWeatherData()">Get Weather</button>
+        <p id="WeatherOutput">Ouput here</p>
+    </body>
+
+    <script>
+        const cityInput = document.getElementById("CityInput");
+        const stateInput = document.getElementById("StateInput");
+        const weatherText = document.getElementById("WeatherOutput");
+        function GetWeatherData()
+        {
+           let cityName = cityInput.value;
+           let stateName = stateInput.value;
+
+            if(cityName.trim() == "" || stateName.trim() == "")
+            {
+                weatherText.innerText = "Cannot have nothing for your state or city name";
+                return;
+            }
+
+            cityInput.value = "";
+            stateInput.value = "";
+            let locationInfo = {State: stateName, City: cityName};
+            fetch("/getWeather", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(locationInfo)
+            }).then(response => response.json()).then(weatherInfo => {
+                console.log(weatherInfo);
+                weatherText.innerHTML = weatherInfo.WeatherData;
+            });
+
+        }
+
+        cityInput.addEventListener("keydown", function(event) {
+            if(event.key == "Enter")
+            {
+                GetWeatherData();
+            }
+        });
+
+        stateInput.addEventListener("keydown", function(event) {
+            if(event.key == "Enter")
+            {
+                GetWeatherData();
+            }
+        });
+    </script>
+</html>
