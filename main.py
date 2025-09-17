@@ -52,8 +52,11 @@ def Get5DayForcastStr(allWeather):
     previousDay = curDay
     dayHigh = -1000
     dayLow = 1000
+    baseiconUrl = "https://cdn.weatherbit.io/static/img/icons/"
+    iconImageElement = "<img style=\"width:30px; height:30px\""
     weatherStr = f"<h1>Weather for {allWeather["city_name"]}, {allWeather["country_code"]}/{allWeather["state_code"]}, Timezone: {allWeather["timezone"]}</h1><br>"
     for weatherData in allWeather["data"]:
+        iconUrl = f"{baseiconUrl}{weatherData["weather"]["icon"]}.png"
         dayPos = weatherData["datetime"].find(":")
         curDay = int(weatherData["datetime"][dayPos - 2:dayPos])
         curTemp =   round(weatherData["temp"], 2)
@@ -63,7 +66,7 @@ def Get5DayForcastStr(allWeather):
             dayHigh = curTemp
             dayLow = curTemp
             curDayIndex += 1
-        weatherStr += (f"At hour {weatherData["datetime"][dayPos + 1:]} it is {curTemp}C/{CelciusToFarinhiet(curTemp)}F with {weatherData["weather"]["description"]}<br>")
+        weatherStr += (f"At hour {weatherData["datetime"][dayPos + 1:]} it is {curTemp}C/{CelciusToFarinhiet(curTemp)}F with {weatherData["weather"]["description"]}{iconImageElement} src=\"{iconUrl}\"><br>")
         previousDay = curDay
         if dayHigh < weatherData["temp"]:
             dayHigh = weatherData["temp"]
